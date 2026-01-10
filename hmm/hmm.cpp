@@ -1,4 +1,4 @@
-#include "hmm.hpp"
+#include "./hmm.hpp"
 
 
 vector<string> load_sequences(const string &filename) {

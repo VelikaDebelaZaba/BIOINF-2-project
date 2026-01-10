@@ -1,4 +1,4 @@
-#include "genome_preprocesing.hpp"
+#include "./genome_preprocesing.hpp"
 
 
 vector<string> load_positive_cpg(const string &filename, vector<CpgRegion> &coords) {

@@ -1,5 +1,5 @@
-#include "hmm/hmm_io.hpp"
-#include "hmm/hmm.hpp"
+#include "./hmm_io.hpp"
+#include "./hmm.hpp"
 
 using namespace std;
 

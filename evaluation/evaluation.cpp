@@ -1,4 +1,4 @@
-#include "evaluation.hpp"
+#include "./evaluation.hpp"
 
 
 void island_based_evaluation(const vector<CpgRegion>& predicted, const vector<CpgRegion>& truth) {

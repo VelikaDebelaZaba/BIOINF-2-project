@@ -1,4 +1,4 @@
-#include "decoded_postprocesing.hpp"
+#include "./decoded_postprocesing.hpp"
 
 
 void extract_cpg_islands(vector<CpgRegion>& islands, vector<int>& states) {

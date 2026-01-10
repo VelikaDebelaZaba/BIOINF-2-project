@@ -4,7 +4,7 @@
 #include <cmath>
 #include <iostream>
 
-#include "utils/structs_consts_functions.hpp"
+#include "../utils/structs_consts_functions.hpp"
 
 using namespace std;
 

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "utils/structs_consts_functions.hpp"
-#include "algorithms/forward_backward.hpp"
+#include "../utils/structs_consts_functions.hpp"
+#include "../algorithms/forward_backward.hpp"
 
 using namespace std;
 

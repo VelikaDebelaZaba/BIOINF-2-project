@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 
-#include "hmm/hmm_io.hpp"
-#include "utils/structs_consts_functions.hpp"
-#include "algorithms/baum_welch.hpp"
+#include "../hmm/hmm_io.hpp"
+#include "../utils/structs_consts_functions.hpp"
+#include "../algorithms/baum_welch.hpp"
 
 using namespace std;
 

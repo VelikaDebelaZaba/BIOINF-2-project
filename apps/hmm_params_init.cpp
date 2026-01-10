@@ -1,5 +1,5 @@
-#include "hmm/hmm.hpp"
-#include "utils/structs_consts_functions.hpp"
+#include "../hmm/hmm.hpp"
+#include "../utils/structs_consts_functions.hpp"
 
 
 int main() {

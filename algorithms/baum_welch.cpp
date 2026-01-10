@@ -1,4 +1,4 @@
-#include "algorithms/baum_welch.hpp"
+#include "./baum_welch.hpp"
 
 
 double baum_welch_iteration(const vector<int>& O, HMM& hmm, double& ll) {

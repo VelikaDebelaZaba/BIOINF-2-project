@@ -1,4 +1,4 @@
-#include "algorithms/viterbij.hpp"
+#include "./viterbij.hpp"
 
 
 vector<int> viterbi(const vector<int>& O, const HMM& hmm) {

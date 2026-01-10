@@ -1,8 +1,7 @@
-#include "hmm/hmm_io.hpp"
-#include "utils/structs_consts_functions.hpp"
-#include "algorithms/viterbij.hpp"
-#include "postprocesing/decoded_postprocesing.hpp"
-#include "evaluation/evaluation.hpp"
+#include "../hmm/hmm_io.hpp"
+#include "../algorithms/viterbij.hpp"
+#include "../postprocesing/decoded_postprocesing.hpp"
+#include "../evaluation/evaluation.hpp"
 
 
 

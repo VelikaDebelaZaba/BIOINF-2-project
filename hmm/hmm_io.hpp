@@ -4,7 +4,7 @@
 #include <fstream>
 #include <string>
 
-#include "utils/structs_consts_functions.hpp"
+#include "../utils/structs_consts_functions.hpp"
 
 using namespace std;
 

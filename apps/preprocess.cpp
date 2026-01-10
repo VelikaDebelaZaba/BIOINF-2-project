@@ -1,4 +1,4 @@
-#include "preprocesing/genome_preprocesing.hpp"
+#include "../preprocesing/genome_preprocesing.hpp"
 
 
 int main() {
