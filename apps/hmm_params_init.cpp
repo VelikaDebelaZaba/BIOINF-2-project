@@ -1,11 +1,10 @@
-#include "../hmm/hmm.hpp"
-#include "../utils/structs_consts_functions.hpp"
+#include "./hmm_params_init.hpp"
 
 
-int main() {
-    vector<string> cpg = load_sequences("../output/clean_positive.txt");
-    string background = load_background("../output/clean_background.txt");
-    vector<CpgRegion> coords = load_coords("../output/coords.txt");
+void hmm_params_init() {
+    vector<string> cpg = load_sequences("../../output/clean_positive.txt");
+    string background = load_background("../../output/clean_background.txt");
+    vector<CpgRegion> coords = load_coords("../../output/coords.txt");
 
     HMM hmm;
 
@@ -20,7 +19,7 @@ int main() {
     hmm.A[1][1] = CC;
     hmm.A[1][0] = CB;
 
-    ofstream out("../output/init_hmm_params.txt");
+    ofstream out("../../output/init_hmm_params.txt");
     out << std::fixed << std::setprecision(8);  // format ispisa
     
     out << "Emisije B (A C G T): "
@@ -42,5 +41,5 @@ int main() {
     out << "C->B: " << hmm.A[1][0] << "\n";
 
     cout << "Inicijalni HMM parametri spremljeni u init_hmm_params.txt\n";
-    return 0;
+    return;
 }

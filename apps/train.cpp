@@ -1,24 +1,17 @@
-#include <iostream>
-#include <cmath>
-
-#include "../hmm/hmm_io.hpp"
-#include "../utils/structs_consts_functions.hpp"
-#include "../algorithms/baum_welch.hpp"
-
-using namespace std;
+#include "./train.hpp"
 
 
-int main() {
+void train_hmm() {
     HMM hmm;
     
-    if (ifstream("../output/trained_hmm_params.txt")) {
-        hmm = load_hmm("../output/trained_hmm_params.txt");
+    if (ifstream("../../output/trained_hmm_params.txt")) {
+        hmm = load_hmm("../../output/trained_hmm_params.txt");
     } else {
-        hmm = load_hmm("../output/init_hmm_params.txt");
+        hmm = load_hmm("../../output/init_hmm_params.txt");
         hmm.chromosome = 1;
     }
 
-    ifstream in("../output/" + to_string(hmm.chromosome) + "_train_chr.txt");
+    ifstream in("../../output/" + to_string(hmm.chromosome) + "_train_chr.txt");
     string s;
     getline(in, s);
 
@@ -38,5 +31,5 @@ int main() {
         prev_ll = ll;
     }
 
-    save_hmm(hmm, "../output/trained_hmm_params.txt");
+    save_hmm(hmm, "../../output/trained_hmm_params.txt");
 }

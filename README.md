@@ -1,0 +1,134 @@
+# CpG Island Detection using Hidden Markov Models
+
+Ovaj projekt implementira cjelokupni **pipeline za detekciju CpG otoka** u ljudskom genomu korištenjem
+**skrivenog Markovljevog modela (HMM)**.
+
+Projekt obuhvaća:
+- predobradu genomskih podataka
+- inicijalizaciju HMM parametara
+- treniranje modela Baum–Welch algoritmom
+- dekodiranje sekvenci Viterbijevim algoritmom
+- evaluaciju predikcija u odnosu na poznate CpG otoke
+
+Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
+
+---
+
+## 📁 Struktura projekta
+
+.
+├── src/
+│ ├── main.cpp # Launcher aplikacije
+│ │
+│ ├── algorithms/
+│ │ ├── baum_welch.cpp
+│ │ ├── forward_backward.cpp
+│ │ ├── viterbij.cp
+│ │
+│ ├── apps/
+│ │ ├── preprocess.cpp
+│ │ ├── hmm_params_init.cpp
+│ │ ├── train.cpp
+│ │ └── decode_and_evaluation.cpp
+│ │
+│ ├── evaluation/
+│ │ ├── evaluation.cpp
+│ │
+│ ├── hmm/
+│ │ ├── hmm_io.cpp
+│ │ ├── hmm.cpp
+│ │
+│ ├── postprocesing/
+│ │ ├── decoded_postprocesing.cpp
+│ │
+│ ├── preprocesing/
+│ │ ├── genome_preprocesing.cpp
+│ │
+│ └── utils/
+│ │ ├── structs_consts_functions.cpp
+│
+├── include/
+│ └── *.hpp
+|
+├── data/
+│ └── ncbi_dataset/
+|
+├── output/
+│ └── (generirane datoteke)
+|
+├── Makefile
+└── README.md
+
+
+---
+
+## ⚙️ Preduvjeti
+
+- C++17 kompatibilan kompajler (`g++`)
+- Standardna C++ biblioteka
+- Linux / macOS okruženje (projekt nije testiran na Windowsu)
+
+---
+
+## 🔧 Kompilacija
+
+U korijenskom direktoriju projekta pokrenuti:
+
+bash 
+    make
+
+Time se stvara izvršna datoteka:
+
+bin/launcher
+
+
+Za čišćenje build datoteka:
+
+make clean
+
+## ▶️ Pokretanje pipeline-a
+
+Pokretanje cijelog pipeline-a (predobrada → treniranje → dekodiranje):
+
+./bin/launcher
+
+
+Launcher redom poziva sljedeće faze:
+
+preprocess() – priprema genoma i CpG anotacija
+
+hmm_params_init() – inicijalizacija HMM parametara
+
+train_hmm() – treniranje HMM-a po kromosomima
+
+decode_and_evaluate() – dekodiranje i evaluacija
+
+## 🧠 Metodologija
+
+Model: 2-stanjni HMM (pozadina / CpG)
+
+Emisije: nukleotidi A, C, G, T
+
+Treniranje: Baum–Welch sa skaliranim forward/backward algoritmom
+
+Dekodiranje: Viterbijev algoritam
+
+Evaluacija:
+
+evaluacija na razini CpG otoka
+
+evaluacija na razini parova baza
+
+## 📌 Napomene
+
+Putanje do ulaznih podataka trenutno su zadane u kodu
+
+Projekt je optimiziran za velike sekvence (cijeli kromosomi)
+
+Skaliranje se koristi radi numeričke stabilnosti
+
+## 👤 Autor
+
+Projekt izradio: Filip Barić, Filip Kovač
+Studij: Računalstvo
+Kolegij: Bioinformatika 2

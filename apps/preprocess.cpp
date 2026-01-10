@@ -1,16 +1,16 @@
-#include "../preprocesing/genome_preprocesing.hpp"
+#include "./preprocess.hpp"
 
 
-int main() {
+void preprocess() {
     vector<CpgRegion> coords;
     string background;
     long chromosome_length = 0;
 
-    const string output_dir = "../output";
-    const string genome_path = "../data/ncbi_dataset/ncbi_dataset/data/GCF_009914755.1/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna";
+    const string output_dir = "../../output";
+    const string genome_path = "../../data/ncbi_dataset/ncbi_dataset/data/GCF_009914755.1/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna";
     const int NUM_CHROMOSOMES = 22;
 
-    vector<string> positive_cpg = load_positive_cpg("../data/test.txt", coords);
+    vector<string> positive_cpg = load_positive_cpg("../../data/test.txt", coords);
     background = load_background(genome_path, coords);
 
     vector<ofstream> chromosome_out_files;
@@ -41,5 +41,5 @@ int main() {
     out2.close();
     coords_out.close();
 
-    return 0;
+    return;
 }

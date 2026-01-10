@@ -1,11 +1,7 @@
-#include "../hmm/hmm_io.hpp"
-#include "../algorithms/viterbij.hpp"
-#include "../postprocesing/decoded_postprocesing.hpp"
-#include "../evaluation/evaluation.hpp"
+#include "./decode_and_evaluation.hpp"
 
 
-
-int main() {
+void decode_and_evaluate() {
     HMM hmm = load_hmm("../output/trained_hmm_params.txt");
 
     ifstream in("../output/" + to_string(hmm.chromosome) + "_test_chr.txt");
@@ -30,4 +26,6 @@ int main() {
 
     // koristimo funkciju kako bi samo podigli trenutni kromosom za 1 
     save_hmm(hmm, "../output/trained_hmm_params.txt");
+
+    return;
 }
