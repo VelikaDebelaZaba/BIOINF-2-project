@@ -1,7 +1,29 @@
-#include "./decode_and_evaluation.hpp"
+#include "../hmm/hmm_io.hpp"
+#include "../algorithms/viterbij.hpp"
+#include "../postprocesing/decoded_postprocesing.hpp"
+#include "../evaluation/evaluation.hpp"
 
 
-void decode_and_evaluate() {
+/**
+ * @brief Dekodiranje sekvence i evaluacija predviđenih CpG otoka.
+ *
+ * Funkcija provodi fazu dekodiranja i evaluacije:
+ * - Učitava istrenirane HMM parametre.
+ * - Primjenjuje Viterbijev algoritam za određivanje
+ *   najvjerojatnijeg niza stanja.
+ * - Iz dekodiranih stanja izdvaja predviđene CpG otoke.
+ * - Prilagođava predikcije prema lowercase regijama genoma.
+ * - Filtrira i spaja bliske ili kratke CpG otoke.
+ * - Uspoređuje predviđene otoke s poznatim CpG otocima koristeći:
+ *     - evaluaciju na razini otoka
+ *     - evaluaciju na razini parova baza
+ *
+ * Nakon evaluacije, indeks kromosoma se povećava
+ * i sprema za sljedeći ciklus dekodiranja.
+ *
+ * @note Funkcija je namijenjena evaluaciji na testnim kromosomima.
+ */ 
+int main() {
     HMM hmm = load_hmm("../output/trained_hmm_params.txt");
 
     ifstream in("../output/" + to_string(hmm.chromosome) + "_test_chr.txt");
@@ -27,5 +49,5 @@ void decode_and_evaluate() {
     // koristimo funkciju kako bi samo podigli trenutni kromosom za 1 
     save_hmm(hmm, "../output/trained_hmm_params.txt");
 
-    return;
+    return 0;
 }

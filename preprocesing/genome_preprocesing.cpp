@@ -41,7 +41,7 @@ vector<string> load_positive_cpg(const string &filename, vector<CpgRegion> &coor
                 start = stoll(line.substr(pos, dash - pos));
                 end   = stoll(line.substr(dash + 1, space - dash - 1));
 
-                coords.push_back({chromosome, start, end});
+                coords.push_back({start, end, chromosome});
             }
 
         } else {

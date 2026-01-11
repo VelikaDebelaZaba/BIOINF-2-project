@@ -2,11 +2,6 @@
 #include <fstream>
 #include <string>
 
-#include "./apps/preprocess.hpp"
-#include "./apps/hmm_params_init.hpp"
-#include "./apps/train.hpp"
-#include "./apps/decode_and_evaluation.hpp"
-
 using namespace std;
 
 int main() {
@@ -16,18 +11,17 @@ int main() {
 
     cout << "=== Detekcija CpG otoka pipeline ===\n";
     cout << "\n[1/4] Pretprocesiranje\n";
-    preprocess();
+    system("./bin/preprocess");
 
     cout << "\n[2/4] Inicijalizacija HMM parametara\n";
-    hmm_params_init();
+    system("./bin/hmm_init");
 
 
     cout << "\n[3/4] Treniranje HMM (Baum-Welch)\n";
 
     for (int chr = 1; chr <= NUM_TRAIN_CHR; chr++) {
         cout << "\n--- Treniranje na kromosomu " << chr << " ---\n";
-
-        train_hmm();
+        system("./bin/train");
     }
 
 
@@ -35,8 +29,7 @@ int main() {
 
     for (int chr = NUM_TRAIN_CHR + 1; chr <= NUM_TOTAL_CHR; chr++) {
         cout << "\n--- Dekodiranje i evaluacija na kromosomu " << chr << " ---\n";
-
-        decode_and_evaluate();
+        system("./bin/decode_and_evaluation");
     }
 
     cout << "\n=== Pipeline finished successfully ===\n";

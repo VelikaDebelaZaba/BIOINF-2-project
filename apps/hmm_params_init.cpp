@@ -1,10 +1,25 @@
-#include "./hmm_params_init.hpp"
+#include "../hmm/hmm.hpp"
+#include "../utils/structs_consts_functions.hpp"
 
-
-void hmm_params_init() {
-    vector<string> cpg = load_sequences("../../output/clean_positive.txt");
-    string background = load_background("../../output/clean_background.txt");
-    vector<CpgRegion> coords = load_coords("../../output/coords.txt");
+/**
+ * @brief Inicijalizacija parametara skrivenog Markovljevog modela (HMM).
+ *
+ * Funkcija izračunava početne parametre HMM-a:
+ * - Emisijske vjerojatnosti za pozadinsko i CpG stanje
+ *   na temelju frekvencija nukleotida.
+ * - Prijelazne vjerojatnosti između stanja
+ *   na temelju poznatih CpG koordinata i duljine genoma.
+ *
+ * Inicijalni parametri se spremaju u datoteku `init_hmm_params.txt`
+ * i koriste se kao početna točka za Baum–Welch treniranje.
+ *
+ * @note Pretpostavlja se da je predobrada već izvršena
+ *       i da potrebne ulazne datoteke postoje.
+ */
+int main() {
+    vector<string> cpg = load_sequences("../output/clean_positive.txt");
+    string background = load_background("../output/clean_background.txt");
+    vector<CpgRegion> coords = load_coords("../output/coords.txt");
 
     HMM hmm;
 
@@ -19,7 +34,7 @@ void hmm_params_init() {
     hmm.A[1][1] = CC;
     hmm.A[1][0] = CB;
 
-    ofstream out("../../output/init_hmm_params.txt");
+    ofstream out("../output/init_hmm_params.txt");
     out << std::fixed << std::setprecision(8);  // format ispisa
     
     out << "Emisije B (A C G T): "
@@ -41,5 +56,5 @@ void hmm_params_init() {
     out << "C->B: " << hmm.A[1][0] << "\n";
 
     cout << "Inicijalni HMM parametri spremljeni u init_hmm_params.txt\n";
-    return;
+    return 0;
 }

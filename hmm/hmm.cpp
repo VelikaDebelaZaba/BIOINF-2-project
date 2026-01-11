@@ -41,8 +41,8 @@ vector<CpgRegion> load_coords(const string &filename) {
         exit(1);
     }
 
-    int temp, s, e;
-    while (file >> temp >> s >> e) {
+    int chr, s, e;
+    while (file >> chr >> s >> e) {
         coords.push_back({s, e});
     }
     return coords;

@@ -1,17 +1,39 @@
-#include "./train.hpp"
+#include <iostream>
+#include <cmath>
+
+#include "../hmm/hmm_io.hpp"
+#include "../utils/structs_consts_functions.hpp"
+#include "../algorithms/baum_welch.hpp"
 
 
-void train_hmm() {
+/**
+ * @brief Treniranje skrivenog Markovljevog modela pomoću Baum–Welch algoritma.
+ *
+ * Ova funkcija provodi iterativno treniranje HMM-a za jedan kromosom:
+ * - Učitava prethodno istrenirane parametre ako postoje,
+ *   u suprotnom koristi inicijalne parametre.
+ * - Učitava trening sekvencu za trenutačni kromosom.
+ * - Izvodi više iteracija Baum–Welch algoritma
+ *   do konvergencije ili maksimalnog broja iteracija.
+ * - Sprema ažurirane HMM parametre na disk.
+ *
+ * Indeks kromosoma se čuva unutar HMM strukture
+ * i koristi se za sekvencijalno treniranje više kromosoma.
+ *
+ * @note Funkcija je predviđena za uzastopno pozivanje
+ *       nad više kromosoma.
+ */
+int main() {
     HMM hmm;
     
-    if (ifstream("../../output/trained_hmm_params.txt")) {
-        hmm = load_hmm("../../output/trained_hmm_params.txt");
+    if (ifstream("../output/trained_hmm_params.txt")) {
+        hmm = load_hmm("../output/trained_hmm_params.txt");
     } else {
-        hmm = load_hmm("../../output/init_hmm_params.txt");
+        hmm = load_hmm("../output/init_hmm_params.txt");
         hmm.chromosome = 1;
     }
 
-    ifstream in("../../output/" + to_string(hmm.chromosome) + "_train_chr.txt");
+    ifstream in("../output/" + to_string(hmm.chromosome) + "_train_chr.txt");
     string s;
     getline(in, s);
 
@@ -31,5 +53,7 @@ void train_hmm() {
         prev_ll = ll;
     }
 
-    save_hmm(hmm, "../../output/trained_hmm_params.txt");
+    save_hmm(hmm, "../output/trained_hmm_params.txt");
+
+    return 0;
 }

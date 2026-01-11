@@ -1,16 +1,36 @@
-#include "./preprocess.hpp"
+#include "../preprocesing/genome_preprocesing.hpp"
 
 
-void preprocess() {
+/**
+ * @brief Predobrada genomskih podataka i priprema ulaznih datoteka za HMM.
+ *
+ * Ova funkcija provodi cjelokupni postupak predobrade:
+ * - Učitava poznate koordinate pozitivnih CpG otoka.
+ * - Učitava i čisti pozadinsku (background) genomsku sekvencu.
+ * - Dijeli genom na pojedinačne kromosome.
+ * - Bilježi lowercase (maskirane) regije za svaki kromosom.
+ * - Sprema per-kromosomske sekvence i pripadne metapodatke.
+ *
+ * U izlazni direktorij se zapisuju:
+ * - Očišćene pozitivne CpG sekvence.
+ * - Očišćena pozadinska sekvenca.
+ * - Datoteke s kromosomskim sekvencama i lowercase anotacijama.
+ * - Datoteka s koordinatama CpG otoka.
+ *
+ * Funkcija se izvršava jednom prije inicijalizacije i treniranja HMM-a.
+ *
+ * @note Putanje do datoteka su trenutno zadane u kodu (hardcoded).
+ */
+int main() {
     vector<CpgRegion> coords;
     string background;
     long chromosome_length = 0;
 
-    const string output_dir = "../../output";
-    const string genome_path = "../../data/ncbi_dataset/ncbi_dataset/data/GCF_009914755.1/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna";
+    const string output_dir = "../output";
+    const string genome_path = "../data/ncbi_dataset/ncbi_dataset/data/GCF_009914755.1/GCF_009914755.1_T2T-CHM13v2.0_genomic.fna";
     const int NUM_CHROMOSOMES = 22;
 
-    vector<string> positive_cpg = load_positive_cpg("../../data/test.txt", coords);
+    vector<string> positive_cpg = load_positive_cpg("../data/test.txt", coords);
     background = load_background(genome_path, coords);
 
     vector<ofstream> chromosome_out_files;
@@ -41,5 +61,5 @@ void preprocess() {
     out2.close();
     coords_out.close();
 
-    return;
+    return 0;
 }

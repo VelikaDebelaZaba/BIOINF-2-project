@@ -43,13 +43,14 @@ inline int sym_index(char c) {
 
 /**
  * CpgRegion struktura za pohranu koordinata CpG otoka
- * start - početna pozicija (1-based)
- * end   - završna pozicija (1-based)
+ * start      - početna pozicija (1-based)
+ * end        - završna pozicija (1-based)
+ * chromosome - 
  */
-struct CpgRegion {
-    int chromosome;
+struct CpgRegion { 
     int start;
     int end;
+    int chromosome;
 };
 
 

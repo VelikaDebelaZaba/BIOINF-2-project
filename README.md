@@ -95,13 +95,23 @@ Pokretanje cijelog pipeline-a (predobrada → treniranje → dekodiranje):
 
 Launcher redom poziva sljedeće faze:
 
-preprocess() – priprema genoma i CpG anotacija
+1. preprocess() – priprema genoma i CpG anotacija
 
-hmm_params_init() – inicijalizacija HMM parametara
+2. hmm_params_init() – inicijalizacija HMM parametara
 
-train_hmm() – treniranje HMM-a po kromosomima
+3. train_hmm() – treniranje HMM-a po kromosomima
 
-decode_and_evaluate() – dekodiranje i evaluacija
+4. decode_and_evaluate() – dekodiranje i evaluacija
+
+## 🧠 Arhitektura pipeline-a
+
+Pipeline je namjerno podijeljen u **više zasebnih izvršnih programa**
+kako bi se izbjeglo prekomjerno korištenje memorije.
+
+Svaka faza se izvršava u **posebnom procesu**, čime se:
+- osigurava oslobađanje RAM-a nakon završetka faze
+- izbjegava akumulacija memorije kod obrade velikih kromosoma
+- omogućuje stabilno izvođenje na standardnim računalima
 
 ## 🧠 Metodologija
 
@@ -113,11 +123,7 @@ Treniranje: Baum–Welch sa skaliranim forward/backward algoritmom
 
 Dekodiranje: Viterbijev algoritam
 
-Evaluacija:
-
-evaluacija na razini CpG otoka
-
-evaluacija na razini parova baza
+Evaluacija: na razini CpG otoka i na razini parova baza
 
 ## 📌 Napomene
 
@@ -130,5 +136,7 @@ Skaliranje se koristi radi numeričke stabilnosti
 ## 👤 Autor
 
 Projekt izradio: Filip Barić, Filip Kovač
+
 Studij: Računalstvo
+
 Kolegij: Bioinformatika 2
