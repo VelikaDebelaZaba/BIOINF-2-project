@@ -23,7 +23,7 @@ Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
 │ ├── algorithms/
 │ │ ├── baum_welch.cpp
 │ │ ├── forward_backward.cpp
-│ │ ├── viterbij.cp
+│ │ ├── viterbij.cpp
 │ │
 │ ├── apps/
 │ │ ├── preprocess.cpp
@@ -44,11 +44,12 @@ Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
 │ ├── preprocesing/
 │ │ ├── genome_preprocesing.cpp
 │ │
-│ └── utils/
-│ │ ├── structs_consts_functions.cpp
 │
 ├── include/
-│ └── *.hpp
+| ├── hmm/
+| ├── evaluation/
+| ├── algorithms/
+| └── utils/
 |
 ├── data/
 │ └── ncbi_dataset/
