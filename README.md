@@ -15,7 +15,7 @@ Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
 ---
 
 ## 📁 Struktura projekta
-
+```
 .
 ├── src/
 │ ├── main.cpp # Launcher aplikacije
@@ -59,7 +59,7 @@ Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
 |
 ├── Makefile
 └── README.md
-
+```
 
 ---
 
@@ -74,10 +74,10 @@ Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
 ## 🔧 Kompilacija
 
 U korijenskom direktoriju projekta pokrenuti:
-
+```
 bash 
     make
-
+```
 Time se stvara izvršna datoteka:
 
 bin/launcher
