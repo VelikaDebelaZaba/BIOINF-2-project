@@ -1,4 +1,5 @@
 #include "./baum_welch.hpp"
+//#include <iostream>
 
 
 double baum_welch_iteration(const vector<int>& O, HMM& hmm, double& ll) {
@@ -33,6 +34,14 @@ double baum_welch_iteration(const vector<int>& O, HMM& hmm, double& ll) {
 
         for (int i = 0; i < NSTATE; i++) {
             double gamma = (alpha[t][i] * beta[t][i]) / gamma_nazivnik;
+
+            // azuriranje pi vrijednosti u HMM modelu
+            // PROVJERITI treba li se skalirati jer pri ispisu dosta pada
+            // kaže sin kada smanjimo veličinu uzorka da bi trebalo biti uredu
+            /*if (t == 0) {
+                cout << gamma << "\n";
+                hmm.pi[i] = gamma;
+            }*/
 
             A_den[i] += gamma;
             B_den[i] += gamma;

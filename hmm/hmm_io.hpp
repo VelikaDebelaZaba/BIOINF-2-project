@@ -19,7 +19,7 @@ HMM load_hmm(const string &filename);
 
 
 /**
- * @brief Sprema HMM parametre u datoteku iz log-domene u normalnu domenu.
+ * @brief Sprema HMM parametre u datoteku
  * 
  * @param hmm HMM parametri
  * @param filename Ime datoteke

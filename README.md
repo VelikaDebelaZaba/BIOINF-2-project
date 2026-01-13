@@ -128,7 +128,10 @@ Evaluacija: na razini CpG otoka i na razini parova baza
 
 ## 📌 Napomene
 
-Putanje do ulaznih podataka trenutno su zadane u kodu
+Putanje do ulaznih podataka trenutno su zadane u kodu stoga je
+potrebna prilagodba ovisno gdje su postavljeni folderi. Po kodu
+trenutno 'output' i 'data' folderi su izvan 'src' foldera u kojemu
+je kod.
 
 Projekt je optimiziran za velike sekvence (cijeli kromosomi)
 

@@ -30,7 +30,6 @@ int main() {
         hmm = load_hmm("../output/trained_hmm_params.txt");
     } else {
         hmm = load_hmm("../output/init_hmm_params.txt");
-        hmm.chromosome = 1;
     }
 
     ifstream in("../output/" + to_string(hmm.chromosome) + "_train_chr.txt");

@@ -1,4 +1,5 @@
 #include "../hmm/hmm.hpp"
+#include "../hmm/hmm_io.hpp"
 #include "../utils/structs_consts_functions.hpp"
 
 /**
@@ -34,27 +35,7 @@ int main() {
     hmm.A[1][1] = CC;
     hmm.A[1][0] = CB;
 
-    ofstream out("../output/init_hmm_params.txt");
-    out << std::fixed << std::setprecision(8);  // format ispisa
-    
-    out << "Emisije B (A C G T): "
-        << hmm.B[0][0] << " "
-        << hmm.B[0][1] << " "
-        << hmm.B[0][2] << " "
-        << hmm.B[0][3] << "\n";
-
-    out << "Emisije C (A C G T): "
-        << hmm.B[1][0] << " "
-        << hmm.B[1][1] << " "
-        << hmm.B[1][2] << " "
-        << hmm.B[1][3] << "\n";
-
-    out << "Tranzicije:\n";
-    out << "B->B: " << hmm.A[0][0] << "\n";
-    out << "B->C: " << hmm.A[0][1] << "\n";
-    out << "C->C: " << hmm.A[1][1] << "\n";
-    out << "C->B: " << hmm.A[1][0] << "\n";
-
+    save_hmm(hmm, "../output/init_hmm_params.txt");
     cout << "Inicijalni HMM parametri spremljeni u init_hmm_params.txt\n";
     return 0;
 }

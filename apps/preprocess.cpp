@@ -48,6 +48,7 @@ int main() {
             chromosome_out_files[chr - 1] << l.start << " " << l.end << "\n";
     }
 
+    // velicine bjeze malo iz nekog razloga
     cout << "Broj pozitivnih CpG otoka: " << positive_cpg.size() << endl;
     cout << "Duzina originalnog kromosoma: " << chromosome_length << endl;
     cout << "Duzina backgrounda nakon ciscenja: " << background.size() << endl;

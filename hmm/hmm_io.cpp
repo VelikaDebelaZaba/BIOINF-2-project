@@ -17,7 +17,7 @@ HMM load_hmm(const string &filename) {
     if (filename == "../output/trained_hmm_params.txt") {
         in >> tmp >> hmm.chromosome;
     } else {
-        hmm.chromosome = -1;
+        hmm.chromosome = 1;
     }
 
     in >> tmp >> tmp >> tmp >> tmp >> tmp >> tmp;   
@@ -32,8 +32,12 @@ HMM load_hmm(const string &filename) {
     in >> tmp >> hmm.A[1][1];
     in >> tmp >> hmm.A[1][0];
 
-    hmm.pi[0] = 0.9;
-    hmm.pi[1] = 0.1;
+    if (filename == "../output/trained_hmm_params.txt") {
+        in >> tmp >> hmm.pi[0] >> hmm.pi[1];
+    } else {
+        hmm.pi[0] = 0.9;
+        hmm.pi[1] = 0.1;
+    }
 
     return hmm;
 }
@@ -41,8 +45,11 @@ HMM load_hmm(const string &filename) {
 
 void save_hmm(const HMM& hmm, const string& filename) {
     ofstream out(filename);
+    out << fixed << setprecision(8);  // format ispisa
 
-    out << "Kromosom: " << hmm.chromosome + 1 << "\n";
+    if (filename == "../output/trained_hmm_params.txt") 
+        out << "Kromosom: " << hmm.chromosome + 1 << "\n";
+    
     out << "Emisije B (A C G T): ";
     for (int k = 0; k < NSYM; k++) out << hmm.B[0][k] << " ";
     out << "\nEmisije C (A C G T): ";
@@ -53,4 +60,10 @@ void save_hmm(const HMM& hmm, const string& filename) {
     out << "B->C " << hmm.A[0][1] << "\n";
     out << "C->C " << hmm.A[1][1] << "\n";
     out << "C->B " << hmm.A[1][0] << "\n";
+
+    if (filename == "../output/trained_hmm_params.txt") {
+        out << "PI: " << hmm.pi[0] << " " << hmm.pi[1] << "\n";
+    } else {
+        out << "PI: 0.9 0.1\n";
+    }
 }

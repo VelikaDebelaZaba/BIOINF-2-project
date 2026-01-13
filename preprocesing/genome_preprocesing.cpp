@@ -31,7 +31,8 @@ vector<string> load_positive_cpg(const string &filename, vector<CpgRegion> &coor
                     chromosome = stoi(line.substr(pos, colon - pos));
                 } catch (const invalid_argument &e) {
                     // naišli smo na  zapis kromosoma koji nije 
-                    // broj (npr. X, Y, MT), preskačemo ga
+                    // broj X prekidamo petlju jer su ostali samo
+                    // X i Y
                     continue;
                 }
 
@@ -112,7 +113,22 @@ string load_background(const string &filename, const vector<CpgRegion> &coords) 
     string line, genome;
     while (getline(file, line)) {
         if (line.size() == 0) continue;
-        if (line[0] == '>') continue;
+        if (line[0] == '>') {
+            size_t pos = line.find("chromosome ");
+            if (pos != string::npos) {
+                pos += string("chromosome ").size();
+                try {
+                    stoi(line.substr(pos, pos + 1));
+                    continue;
+                } catch (const invalid_argument &e) {
+                    // naišli smo na  zapis kromosoma koji nije 
+                    // broj X prekidamo petlju jer su ostali samo
+                    // X i Y
+                    break;
+                }
+            }
+        }
+
         for (char c : line) {
             if (isupper(c)) genome.push_back(c);
         }

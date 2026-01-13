@@ -13,7 +13,8 @@ PREPROCESS_SRC = \
 
 HMM_INIT_SRC = \
 	./apps/hmm_params_init.cpp \
-	./hmm/hmm.cpp
+	./hmm/hmm.cpp \
+	./hmm/hmm_io.cpp
 
 TRAIN_SRC = \
 	./apps/train.cpp \
