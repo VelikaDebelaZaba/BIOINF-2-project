@@ -7,7 +7,7 @@ void extract_cpg_islands(vector<CpgRegion>& islands, vector<int>& states) {
         if (states[i] == 1 && start == -1) start = i + 1;
 
         if ((states[i] == 0 || i == states.size()-1) && start != -1) {
-            int end = (states[i] == 0) ? i : i + 1;
+            int end = (states[i] == 0) ? i + 1 : i + 2;
             islands.push_back({start, end});
             start = -1;
         }
@@ -86,6 +86,3 @@ void load_true_islands(vector<CpgRegion>& islands, int chr_number) {
         }
     } 
 }
-
-
-

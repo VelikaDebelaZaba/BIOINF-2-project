@@ -49,45 +49,45 @@ vector<CpgRegion> load_coords(const string &filename) {
 }
 
 
-void compute_emission_pos(const vector<string> &seqs, double emit[4]) {
-    long long cntA = 0, cntC = 0, cntG = 0, cntT = 0;
+void compute_emission_pos(const vector<string> &seqs, double emit[16]) {
+    long long counts[NSYM] = {0};
+    long long total = 0;
 
-    for (auto &s : seqs) {
-        for (char b : s) {
-            switch (b) {
-                case 'A': cntA++; break;
-                case 'C': cntC++; break;
-                case 'G': cntG++; break;
-                case 'T': cntT++; break;
+    for (const auto &s : seqs) {
+        if (s.size() < 2) continue;
+        for (size_t i = 0; i + 1 < s.size(); i++) {
+            int idx = dinuc_index(s[i], s[i + 1]);
+            if (idx >= 0) {
+                counts[idx]++;
+                total++;
+
             }
         }
     }
 
-    double total = cntA + cntC + cntG + cntT;
-    emit[0] = cntA / total;
-    emit[1] = cntC / total;
-    emit[2] = cntG / total;
-    emit[3] = cntT / total;
+   for (int k = 0; k < NSYM; k++)
+        emit[k] = (total > 0) ? counts[k] / static_cast<double>(total) : 0.0;
 }
 
 
-void compute_emission_bg(const string &bg, double emit[4]) {
-    long long cntA = 0, cntC = 0, cntG = 0, cntT = 0;
+void compute_emission_bg(const string &bg, double emit[16]) {
+    long long counts[NSYM] = {0};
+    long long total = 0;
 
-    for (char b : bg) {
-        switch (b) {
-            case 'A': cntA++; break;
-            case 'C': cntC++; break;
-            case 'G': cntG++; break;
-            case 'T': cntT++; break;
+
+    if (bg.size() >= 2) {
+        for (size_t i = 0; i + 1 < bg.size(); i++) {
+            int idx = dinuc_index(bg[i], bg[i + 1]);
+            if (idx >= 0) {
+                counts[idx]++;
+                total++;
+            }
         }
     }
 
-    double total = cntA + cntC + cntG + cntT;
-    emit[0] = cntA / total;
-    emit[1] = cntC / total;
-    emit[2] = cntG / total;
-    emit[3] = cntT / total;
+
+    for (int k = 0; k < NSYM; k++)
+        emit[k] = (total > 0) ? counts[k] / static_cast<double>(total) : 0.0;
 }
 
 

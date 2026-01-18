@@ -4,10 +4,10 @@
 /**
  * Globalne konstante HMM-a
  * 2 stanja: 0 = Background (B), 1 = CpG (C)
- * 4 simbola: A, C, G, T
+ * 16 simbola: dinukleotidi AA, AC, AG, AT, CA, CC, CG, CT, GA, GC, GG, GT, TA, TC, TG, TT
  */
 constexpr int NSTATE = 2;
-constexpr int NSYM   = 4;
+constexpr int NSYM   = 16;
 
 
 /**
@@ -38,6 +38,23 @@ inline int sym_index(char c) {
         case 'T': return 3;
         default:  return -1;
     }
+}
+
+
+/**
+ * Pretvara dinukleotid u indeks:
+ * AA -> 0, AC -> 1, AG -> 2, AT -> 3,
+ * CA -> 4, CC -> 5, CG -> 6, CT -> 7,
+ * GA -> 8, GC -> 9, GG -> 10, GT -> 11,
+ * TA -> 12, TC -> 13, TG -> 14, TT -> 15
+ */
+inline int dinuc_index(char first, char second) {
+    int first_idx = sym_index(first);
+    int second_idx = sym_index(second);
+
+    if (first_idx < 0 || second_idx < 0) return -1;
+
+    return first_idx * 4 + second_idx;
 }
 
 
