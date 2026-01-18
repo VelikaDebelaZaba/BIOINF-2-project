@@ -1,47 +1,63 @@
 #include "./forward_backward.hpp"    
 
-
 double forward_scaled(
     const vector<int>& O,
     const HMM& hmm,
     vector<array<double, NSTATE>>& alpha,
     vector<double>& c
 ) {
-    int T = O.size();
+    int T = (int)O.size();
     alpha.assign(T, {});
     c.assign(T, 0.0);
 
     // t = 0
+    c[0] = 0.0;
     for (int i = 0; i < NSTATE; i++) {
         alpha[0][i] = hmm.pi[i] * hmm.B[i][O[0]];
         c[0] += alpha[0][i];
     }
 
-    c[0] = 1.0 / c[0];
-    for (int i = 0; i < NSTATE; i++)
-        alpha[0][i] *= c[0];
+    // AKO je suma 0 ili nije finite -> postavi uniformno i nastavi (sprječava 0*inf => NaN)
+    if (!std::isfinite(c[0]) || c[0] <= 0.0) {
+        for (int i = 0; i < NSTATE; i++) alpha[0][i] = 1.0 / NSTATE;
+        c[0] = 1.0;
+    } else {
+        c[0] = 1.0 / c[0];
+        if (!std::isfinite(c[0]) || c[0] > 1e300) c[0] = 1e300;
+        for (int i = 0; i < NSTATE; i++) alpha[0][i] *= c[0];
+    }
 
     // t = 1..T-1
     for (int t = 1; t < T; t++) {
+        c[t] = 0.0;
         for (int j = 0; j < NSTATE; j++) {
-            alpha[t][j] = 0.0;
+            double sum = 0.0;
             for (int i = 0; i < NSTATE; i++)
-                alpha[t][j] += alpha[t-1][i] * hmm.A[i][j];
-            alpha[t][j] *= hmm.B[j][O[t]];
+                sum += alpha[t-1][i] * hmm.A[i][j];
+
+            alpha[t][j] = sum * hmm.B[j][O[t]];
             c[t] += alpha[t][j];
         }
 
-        c[t] = 1.0 / c[t];
-        for (int j = 0; j < NSTATE; j++)
-            alpha[t][j] *= c[t];
+        // fallback ako suma pukne
+        if (!std::isfinite(c[t]) || c[t] <= 0.0) {
+            for (int j = 0; j < NSTATE; j++) alpha[t][j] = 1.0 / NSTATE;
+            c[t] = 1.0;
+        } else {
+            c[t] = 1.0 / c[t];
+            if (!std::isfinite(c[t]) || c[t] > 1e300) c[t] = 1e300;
+            for (int j = 0; j < NSTATE; j++) alpha[t][j] *= c[t];
+        }
     }
 
     double loglik = 0.0;
-    for (int t = 0; t < T; t++)
+    for (int t = 0; t < T; t++) {
+        // log(c[t]) je OK jer smo osigurali c[t] > 0 i finite
         loglik -= log(c[t]);
-
+    }
     return loglik;
 }
+
 
 
 void backward_scaled(

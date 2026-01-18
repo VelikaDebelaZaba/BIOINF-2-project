@@ -7,7 +7,7 @@
  * 4 simbola: A, C, G, T
  */
 constexpr int NSTATE = 2;
-constexpr int NSYM   = 4;
+constexpr int NSYM   = 16;
 
 
 /**
@@ -38,6 +38,23 @@ inline int sym_index(char c) {
         case 'T': return 3;
         default:  return -1;
     }
+}
+
+
+/**
+ * Pretvara dinukleotid (prev, cur) u indeks 0..15:
+ * AA=0, AC=1, AG=2, AT=3,
+ * CA=4, CC=5, CG=6, CT=7,
+ * GA=8, GC=9, GG=10, GT=11,
+ * TA=12, TC=13, TG=14, TT=15
+ *
+ * Vraća -1 ako bilo koji znak nije A/C/G/T.
+ */
+inline int di_index(char prev, char cur) {
+    int a = sym_index(prev);
+    int b = sym_index(cur);
+    if (a == -1 || b == -1) return -1;
+    return a * 4 + b;
 }
 
 

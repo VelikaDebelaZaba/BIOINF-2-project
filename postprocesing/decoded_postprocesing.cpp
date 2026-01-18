@@ -2,17 +2,24 @@
 
 
 void extract_cpg_islands(vector<CpgRegion>& islands, vector<int>& states) {
-    int start = -1;
-    for (int i = 0; i < states.size(); i++) {
-        if (states[i] == 1 && start == -1) start = i + 1;
+    int start_d = -1; // start u dinukleotid indeksima (1-based)
 
-        if ((states[i] == 0 || i == states.size()-1) && start != -1) {
-            int end = (states[i] == 0) ? i : i + 1;
-            islands.push_back({start, end});
-            start = -1;
+    for (int i = 0; i < (int)states.size(); i++) {
+        if (states[i] == 1 && start_d == -1) start_d = i + 1;
+
+        if ((states[i] == 0 || i == (int)states.size() - 1) && start_d != -1) {
+            int end_d = (states[i] == 0) ? i : i + 1; // dinukleotid end (1-based)
+
+            // MAPIRANJE: dinukleotid [start_d, end_d] pokriva baze [start_d, end_d+1]
+            int start_bp = start_d;
+            int end_bp = end_d + 1;
+
+            islands.push_back({start_bp, end_bp, 0}); // chr nije bitan ovdje
+            start_d = -1;
         }
     }
 }
+
 
 
 void move_predicted_based_on_lowercase(vector<CpgRegion>& predicted, int chr_number) {

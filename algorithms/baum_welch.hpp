@@ -15,3 +15,5 @@ using namespace std;
  * @return double Ažurirana log-vjerojatnost sekvenci
 */
 double baum_welch_iteration(const vector<int>& O, HMM& hmm, double& ll);
+
+double baum_welch_iteration_multi(const vector<vector<int>>& sequences, HMM& hmm, double& ll);

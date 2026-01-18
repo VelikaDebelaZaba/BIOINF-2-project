@@ -51,7 +51,7 @@ vector<CpgRegion> load_coords(const string &filename);
  * @param seqs Vektor CpG sekvenci
  * @param emit Niz od 4 elementa za pohranu vjerojatnosti A,C,G,T
  */
-void compute_emission_pos(const vector<string> &seqs, double emit[4]);
+void compute_emission_pos(const vector<string> &seqs, double emit[NSYM]);
 
 
 /**
@@ -60,7 +60,7 @@ void compute_emission_pos(const vector<string> &seqs, double emit[4]);
  * @param bg Sekvenca pozadinskog genoma
  * @param emit Niz od 4 elementa za pohranu vjerojatnosti A,C,G,T
  */
-void compute_emission_bg(const string &bg, double emit[4]);
+void compute_emission_bg(const string &bg, double emit[NSYM]);
 
 
 /**
