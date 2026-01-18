@@ -1,6 +1,5 @@
 #include "./hmm_io.hpp"
 #include "./hmm.hpp"
-#include <sstream>
 
 using namespace std;
 
@@ -13,76 +12,29 @@ HMM load_hmm(const string &filename) {
     }
 
     HMM hmm;
-    string line;
+    string tmp;
 
     if (filename == "../output/trained_hmm_params.txt") {
-        getline(in, line);
-        auto pos = line.find(':');
-        hmm.chromosome = (pos != string::npos) ? stoi(line.substr(pos + 1)) : 1;
+        in >> tmp >> hmm.chromosome;
     } else {
         hmm.chromosome = 1;
     }
 
-    auto read_emissions = [&](double emit[NSYM]) {
-        string line;
-        while (getline(in, line)) {
-            if (!line.empty()) break;
-        }
-        auto pos = line.find(':');
-        if (pos == string::npos) {
-            cerr << "Neispravan format emisija\n";
-            exit(1);
-        }
-        istringstream iss(line.substr(pos + 1));
-        for (int k = 0; k < NSYM; k++) {
-            if (!(iss >> emit[k])) {
-                cerr << "Neispravan broj emisija\n";
-                exit(1);
-            }
-        }
-    };
+    in >> tmp >> tmp >> tmp >> tmp >> tmp >> tmp;   
+    in >> hmm.B[0][0] >> hmm.B[0][1] >> hmm.B[0][2] >> hmm.B[0][3];
 
+    in >> tmp >> tmp >> tmp >> tmp >> tmp >> tmp;
+    in >> hmm.B[1][0] >> hmm.B[1][1] >> hmm.B[1][2] >> hmm.B[1][3];
 
-    read_emissions(hmm.B[0]);
-    read_emissions(hmm.B[1]);
+    in >> tmp;
+    in >> tmp >> hmm.A[0][0];
+    in >> tmp >> hmm.A[0][1];
+    in >> tmp >> hmm.A[1][1];
+    in >> tmp >> hmm.A[1][0];
 
-    while (getline(in, line)) {
-        if (!line.empty()) break;
-    }
-
-
-    if (line.find("Tranzicije") == string::npos) {
-        cerr << "Neispravan format tranzicija\n";
-        exit(1);
-    }
-
-    auto read_transition = [&](double &value) {
-        if (!getline(in, line)) {
-            cerr << "Neispravan format tranzicija\n";
-            exit(1);
-        }
-        istringstream iss(line);
-        string label;
-        if (!(iss >> label >> value)) {
-            cerr << "Neispravan format tranzicija\n";
-            exit(1);
-        }
-    };
-
-    read_transition(hmm.A[0][0]);
-    read_transition(hmm.A[0][1]);
-    read_transition(hmm.A[1][1]);
-    read_transition(hmm.A[1][0]);
-
-    if (getline(in, line)) {
-        auto pos = line.find(':');
-        if (pos != string::npos) {
-            istringstream iss(line.substr(pos + 1));
-            iss >> hmm.pi[0] >> hmm.pi[1];
-        }
-    }
-
-    if (filename != "../output/trained_hmm_params.txt") {
+    if (filename == "../output/trained_hmm_params.txt") {
+        in >> tmp >> hmm.pi[0] >> hmm.pi[1];
+    } else {
         hmm.pi[0] = 0.9;
         hmm.pi[1] = 0.1;
     }
@@ -98,9 +50,9 @@ void save_hmm(const HMM& hmm, const string& filename) {
     if (filename == "../output/trained_hmm_params.txt") 
         out << "Kromosom: " << hmm.chromosome + 1 << "\n";
     
-    out << "Emisije B (AA AC AG AT CA CC CG CT GA GC GG GT TA TC TG TT): ";
+    out << "Emisije B (A C G T): ";
     for (int k = 0; k < NSYM; k++) out << hmm.B[0][k] << " ";
-    out << "\nEmisije C (AA AC AG AT CA CC CG CT GA GC GG GT TA TC TG TT): ";
+    out << "\nEmisije C (A C G T): ";
     for (int k = 0; k < NSYM; k++) out << hmm.B[1][k] << " ";
 
     out << "\nTranzicije:\n";

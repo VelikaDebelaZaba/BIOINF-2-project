@@ -118,7 +118,7 @@ Svaka faza se izvršava u **posebnom procesu**, čime se:
 
 Model: 2-stanjni HMM (pozadina / CpG)
 
-Emisije: dinukleotidi (AA, AC, ..., TT)
+Emisije: nukleotidi A, C, G, T
 
 Treniranje: Baum–Welch sa skaliranim forward/backward algoritmom
 

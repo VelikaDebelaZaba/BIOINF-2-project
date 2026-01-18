@@ -37,13 +37,7 @@ int main() {
     getline(in, s);
 
     vector<int> O;
-    if (s.size() >= 2) {
-        for (size_t i = 0; i + 1 < s.size(); i++) {
-            int idx = dinuc_index(s[i], s[i + 1]);
-            if (idx >= 0) O.push_back(idx);
-        }
-    }
-
+    for (char c : s) O.push_back(sym_index(c));
     cout << "Učitana sekvenca za kromosom " << hmm.chromosome << " dužine " << O.size() << endl;
 
 

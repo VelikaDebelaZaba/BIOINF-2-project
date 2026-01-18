@@ -49,17 +49,18 @@ vector<CpgRegion> load_coords(const string &filename);
  * @brief Računa emisijske vjerojatnosti za CpG stanje na temelju pozitivnih sekvenci
  * 
  * @param seqs Vektor CpG sekvenci
- * @param emit Niz od 16 elemenata za pohranu vjerojatnosti dinukleotida
+ * @param emit Niz od 4 elementa za pohranu vjerojatnosti A,C,G,T
  */
-void compute_emission_pos(const vector<string> &seqs, double emit[16]);
+void compute_emission_pos(const vector<string> &seqs, double emit[4]);
+
 
 /**
  * @brief Računa emisijske vjerojatnosti za pozadinsko stanje na temelju pozadinskog genoma
  * 
  * @param bg Sekvenca pozadinskog genoma
- * @param emit Niz od 16 elemenata za pohranu vjerojatnosti dinukleotida
+ * @param emit Niz od 4 elementa za pohranu vjerojatnosti A,C,G,T
  */
-void compute_emission_bg(const string &bg, double emit[16]);
+void compute_emission_bg(const string &bg, double emit[4]);
 
 
 /**
