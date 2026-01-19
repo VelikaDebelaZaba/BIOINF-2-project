@@ -2,15 +2,14 @@
 #include <fstream>
 #include <vector>
 #include <algorithm>
-#include "../algorithms/forward_backward.hpp" // BEZ VITERBIJA
+#include "../algorithms/forward_backward.hpp"
 #include "../hmm/hmm_io.hpp"
-#include "../algorithms/viterbij.hpp"
 #include "../postprocesing/decoded_postprocesing.hpp"
 #include "../evaluation/evaluation.hpp"
 #include "../utils/structs_consts_functions.hpp"
 
-// Zadrži samo predikcije koje se preklapaju sa "keep" intervalom u baznim koordinatama,
-// i skrati ih na taj interval (da ne uzimamo rubove prozora)
+// Zadrži samo predikcije koje se preklapaju s intervalom zadržavanja u baznim koordinatama
+// i skrati ih na taj interval (da ne uzimamo rubove prozora).
 static void keep_and_clip(std::vector<CpgRegion>& islands, int keep_start_bp, int keep_end_bp) {
     std::vector<CpgRegion> out;
     out.reserve(islands.size());
@@ -24,7 +23,7 @@ static void keep_and_clip(std::vector<CpgRegion>& islands, int keep_start_bp, in
     islands.swap(out);
 }
 
-// Izračunaj posterior P(Z_t = CpG | Oseg) za svaki dinukleotid t koristeći forward/backward.
+// Izračunaj posteriornu vjerojatnost P(Z_t = CpG | Oseg) za svaki dinukleotid t koristeći forward/backward.
 static std::vector<double> compute_posterior_c(const std::vector<int>& Oseg, const HMM& hmm) {
     std::vector<std::array<double, NSTATE>> alpha;
     std::vector<std::array<double, NSTATE>> beta;
@@ -47,7 +46,7 @@ static std::vector<double> compute_posterior_c(const std::vector<int>& Oseg, con
     return posterior;
 }
 
-// Pretvori posterior u tvrda stanja koristeći histerezu (enter/exit prag) radi stabilnih CpG otoka bez treperenja.
+// Pretvori posterior u tvrda stanja uz histerezu (prag ulaska/izlaska) radi stabilnih CpG otoka bez treperenja.
 static std::vector<int> decode_hysteresis(const std::vector<double>& posterior_c, double enter_th, double exit_th) {
     std::vector<int> states(posterior_c.size(), 0);
     bool in_cpg = false;
@@ -64,7 +63,7 @@ static std::vector<int> decode_hysteresis(const std::vector<double>& posterior_c
     return states;
 }
 
-// Suzi (trim) granice CpG otoka uklanjanjem rubova gdje je posterior ispod praga trim_th.
+// Suzi granice CpG otoka uklanjanjem rubova gdje je posterior ispod praga trim_th.
 static void trim_islands_with_posterior(
     std::vector<CpgRegion>& islands,
     const std::vector<double>& posterior_c,
@@ -111,7 +110,7 @@ int main() {
     hmm.pi[0] = 0.96;
     hmm.pi[1] = 0.04;
 
-    // test kromosomi 17-22
+    // Testni kromosomi 17-22
     if (hmm.chromosome < 17) hmm.chromosome = 17;
 
     std::ifstream in("../output/" + std::to_string(hmm.chromosome) + "_test_chr.txt");
@@ -161,17 +160,15 @@ int main() {
         int len_d = end_d - start_d;
         if (len_d < 2) break;
 
-        // segment opažanja
+        // Segment opažanja
         std::vector<int> Oseg;
         Oseg.assign(O.begin() + start_d, O.begin() + end_d);
 
-        // viterbi na segmentu
-        //std::vector<int> states = viterbi(Oseg, hmm);
-        // Posterior + hysteresis decoding na segmentu
+        // Posterior + dekodiranje s histerezom na segmentu.
         std::vector<double> posterior_c = compute_posterior_c(Oseg, hmm);
         std::vector<int> states = decode_hysteresis(posterior_c, POST_ENTER, POST_EXIT);
 
-        // islands u BAZNIM koordinatama segmenta (zbog extract_cpg_islands mapiranja end+1)
+        // CpG otoci u baznim koordinatama segmenta (zbog mapiranja end+1 u extract_cpg_islands).
         std::vector<CpgRegion> islands_seg;
         extract_cpg_islands(islands_seg, states);
 
@@ -196,7 +193,7 @@ int main() {
         int keep_left_d  = (start_d == 0) ? start_d : start_d + OVERLAP / 2;
         int keep_right_d = (end_d == T)   ? end_d  : end_d  - OVERLAP / 2;
 
-        // dinukleotidi -> baze: [d_left, d_right] dinukleotidi pokrivaju baze [d_left+1, d_right+1]
+        // Dinukleotidi -> baze: [d_left, d_right] dinukleotidi pokrivaju baze [d_left+1, d_right+1]
         int keep_start_bp = keep_left_d + 1;
         int keep_end_bp   = keep_right_d + 1;
 

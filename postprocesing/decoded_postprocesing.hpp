@@ -22,9 +22,9 @@ constexpr double MIN_GC_CONTENT = 0.44;
 constexpr double MIN_CPG_OE = 0.50;
 
 /**
- * @brief Izvlači CpG otoke iz sekvence stanja dobivenih Viterbi algoritmom
+ * @brief Izvlači CpG otoke iz binarne sekvence stanja
  * pod pretpostavkom da je stanje 1 CpG otok, a stanje 0 ne-CpG regija. Također
- * primjenjuje minimalnu dužinu CpG otoka kako bi se spriječioo šum, tj. kratke
+ * primjenjuje minimalnu dužinu CpG otoka kako bi se spriječio šum, tj. kratke
  * predviđene otoke ignorira.
  * 
  * @param islands Referenca na vektor za pohranu CpG otoka

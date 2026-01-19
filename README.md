@@ -7,7 +7,7 @@ Projekt obuhvaća:
 - predobradu genomskih podataka
 - inicijalizaciju HMM parametara
 - treniranje modela Baum–Welch algoritmom
-- dekodiranje sekvenci Viterbijevim algoritmom
+- dekodiranje sekvenci posteriornim pristupom
 - evaluaciju predikcija u odnosu na poznate CpG otoke
 
 Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
@@ -23,7 +23,6 @@ Projekt je izrađen u sklopu kolegija **Bioinformatika 2**.
 │ ├── algorithms/
 │ │ ├── baum_welch.cpp
 │ │ ├── forward_backward.cpp
-│ │ ├── viterbij.cpp
 │ │
 │ ├── apps/
 │ │ ├── preprocess.cpp
@@ -122,7 +121,7 @@ Emisije: nukleotidi A, C, G, T
 
 Treniranje: Baum–Welch sa skaliranim forward/backward algoritmom
 
-Dekodiranje: Viterbijev algoritam
+Dekodiranje: posteriorni pristup
 
 Evaluacija: na razini CpG otoka i na razini parova baza
 
