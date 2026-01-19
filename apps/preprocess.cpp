@@ -11,13 +11,15 @@
  * - Bilježi lowercase (maskirane) regije za svaki kromosom.
  * - Sprema per-kromosomske sekvence i pripadne metapodatke.
  *
- * U izlazni direktorij se zapisuju:
- * - Očišćene pozitivne CpG sekvence.
- * - Očišćena pozadinska sekvenca.
- * - Datoteke s kromosomskim sekvencama i lowercase anotacijama.
- * - Datoteka s koordinatama CpG otoka.
+ * Izlazne datoteke:
+ *  - <chr>_train_chr.txt / <chr>_test_chr.txt :
+ *      prvi red = sekvenca kromosoma (samo uppercase),
+ *      sljedeći redovi = intervali lowercase regija (1-based)
+ *  - clean_positive.txt   : sekvence pozitivnih CpG otoka
+ *  - clean_background.txt : pozadinski genom bez CpG regija
+ *  - coords.txt           : koordinate CpG otoka (chr, start, end)
  *
- * Funkcija se izvršava jednom prije inicijalizacije i treniranja HMM-a.
+ * Ova aplikacija se pokreće jednom prije inicijalizacije i treniranja HMM-a.
  *
  * @note Putanje do datoteka su trenutno zadane u kodu (hardcoded).
  */

@@ -16,9 +16,10 @@ using namespace std;
 
 // Minimalna dužina CpG otoka kako bi spriječili šum, tj
 // kratke predviđene otoke ignoriramo
-constexpr int MIN_CPG_LEN = 500;
+constexpr int MIN_CPG_LEN = 250;
 constexpr int MERGE_DISTANCE = 50;
-
+constexpr double MIN_GC_CONTENT = 0.44;
+constexpr double MIN_CPG_OE = 0.50;
 
 /**
  * @brief Izvlači CpG otoke iz sekvence stanja dobivenih Viterbi algoritmom
@@ -48,6 +49,16 @@ void move_predicted_based_on_lowercase(vector<CpgRegion>& predicted, int chr_num
  * @param islands Referenca na vektor CpG otoka
  */
 void filter_lenght_and_merge_close_islands(vector<CpgRegion>& islands);
+
+
+/**
+ * @brief Filtrira CpG otoke prema GC sadržaju i CpG O/E omjeru.
+ *
+ * @param sequence Referenca na sekvencu kromosoma (1-based logika u CpgRegion)
+ * @param islands Referenca na vektor CpG otoka
+ */
+void filter_by_content(const string& sequence, vector<CpgRegion>& islands);
+
 
 
 /**

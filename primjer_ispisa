@@ -1,12 +1,5 @@
-hmm.pi se ne mijenja.
-Hmm.A e mijenja.
-Uvedeni su dinukleotidi.
-Treniranje je na manjim sekvencama gdje je omjer CpG_bogate_regije:background = 1:5 (oprilike)
-U dekodiranje i evaluaciju se kromosom šalje u dijelovima, kada sam slao u komadu napunio mi se ram i skoro 10min je kod stajo na mjestu.
-Uz to sve još sam neke sitne promjene uveo koje je sin reko, nisu vrijedne spomena.
-
 ISPIS:
-./bin/launcher
+./bin/launcher 
 === Detekcija CpG otoka pipeline ===
 
 [1/4] Pretprocesiranje
@@ -195,142 +188,142 @@ Iter 5 logL = -1.44987e+08
 
 --- Dekodiranje i evaluacija na kromosomu 17 ---
 Učitana sekvenca za kromosom 17 (baze=49880495, dinukleotidi=49880494)
-Window 0-5000000 (bp keep 1-4975001), islands=654
-Window 4950000-9950000 (bp keep 4975001-9925001), islands=89
-Window 9900000-14900000 (bp keep 9925001-14875001), islands=532
-Window 14850000-19850000 (bp keep 14875001-19825001), islands=218
-Window 19800000-24800000 (bp keep 19825001-24775001), islands=482
-Window 24750000-29750000 (bp keep 24775001-29725001), islands=492
-Window 29700000-34700000 (bp keep 29725001-34675001), islands=73
-Window 34650000-39650000 (bp keep 34675001-39625001), islands=181
-Window 39600000-44600000 (bp keep 39625001-44575001), islands=255
-Window 44550000-49550000 (bp keep 44575001-49525001), islands=1154
-Window 49500000-49880494 (bp keep 49525001-49880495), islands=117
+Window 0-5000000 (bp keep 1-4975001), islands=376
+Window 4950000-9950000 (bp keep 4975001-9925001), islands=73
+Window 9900000-14900000 (bp keep 9925001-14875001), islands=219
+Window 14850000-19850000 (bp keep 14875001-19825001), islands=137
+Window 19800000-24800000 (bp keep 19825001-24775001), islands=282
+Window 24750000-29750000 (bp keep 24775001-29725001), islands=290
+Window 29700000-34700000 (bp keep 29725001-34675001), islands=62
+Window 34650000-39650000 (bp keep 34675001-39625001), islands=111
+Window 39600000-44600000 (bp keep 39625001-44575001), islands=110
+Window 44550000-49550000 (bp keep 44575001-49525001), islands=430
+Window 49500000-49880494 (bp keep 49525001-49880495), islands=72
 === Island-based evaluation ===
-True Positive = 1298
-False Positive = 2949
-False Negative = 359
-Precision = 0.305628
-Recall = 0.783343
+True Positive = 1355
+False Positive = 807
+False Negative = 302
+Precision = 0.626735
+Recall = 0.817743
 === Base-pair evaluation ===
-True Positive = 1108705
-False Positive = 3435084
-False Negative = 226407
-Precision = 0.244005
-Recall = 0.830421
+True Positive = 1115967
+False Positive = 679107
+False Negative = 219145
+Precision = 0.621683
+Recall = 0.83586
 
 --- Dekodiranje i evaluacija na kromosomu 18 ---
 Učitana sekvenca za kromosom 18 (baze=49580111, dinukleotidi=49580110)
-Window 0-5000000 (bp keep 1-4975001), islands=63
-Window 4950000-9950000 (bp keep 4975001-9925001), islands=139
-Window 9900000-14900000 (bp keep 9925001-14875001), islands=41
-Window 14850000-19850000 (bp keep 14875001-19825001), islands=35
-Window 19800000-24800000 (bp keep 19825001-24775001), islands=26
-Window 24750000-29750000 (bp keep 24775001-29725001), islands=122
-Window 29700000-34700000 (bp keep 29725001-34675001), islands=29
-Window 34650000-39650000 (bp keep 34675001-39625001), islands=45
-Window 39600000-44600000 (bp keep 39625001-44575001), islands=13
-Window 44550000-49550000 (bp keep 44575001-49525001), islands=356
-Window 49500000-49580110 (bp keep 49525001-49580111), islands=5
+Window 0-5000000 (bp keep 1-4975001), islands=73
+Window 4950000-9950000 (bp keep 4975001-9925001), islands=114
+Window 9900000-14900000 (bp keep 9925001-14875001), islands=43
+Window 14850000-19850000 (bp keep 14875001-19825001), islands=38
+Window 19800000-24800000 (bp keep 19825001-24775001), islands=19
+Window 24750000-29750000 (bp keep 24775001-29725001), islands=88
+Window 29700000-34700000 (bp keep 29725001-34675001), islands=35
+Window 34650000-39650000 (bp keep 34675001-39625001), islands=48
+Window 39600000-44600000 (bp keep 39625001-44575001), islands=20
+Window 44550000-49550000 (bp keep 44575001-49525001), islands=287
+Window 49500000-49580110 (bp keep 49525001-49580111), islands=3
 === Island-based evaluation ===
-True Positive = 398
-False Positive = 476
-False Negative = 136
-Precision = 0.455378
-Recall = 0.745318
+True Positive = 475
+False Positive = 293
+False Negative = 59
+Precision = 0.61849
+Recall = 0.889513
 === Base-pair evaluation ===
-True Positive = 363641
-False Positive = 481887
-False Negative = 110234
-Precision = 0.430076
-Recall = 0.767377
+True Positive = 394238
+False Positive = 184102
+False Negative = 79637
+Precision = 0.681672
+Recall = 0.831945
 
 --- Dekodiranje i evaluacija na kromosomu 19 ---
 Učitana sekvenca za kromosom 19 (baze=31654092, dinukleotidi=31654091)
-Window 0-5000000 (bp keep 1-4975001), islands=1460
-Window 4950000-9950000 (bp keep 4975001-9925001), islands=842
-Window 9900000-14900000 (bp keep 9925001-14875001), islands=350
-Window 14850000-19850000 (bp keep 14875001-19825001), islands=386
-Window 19800000-24800000 (bp keep 19825001-24775001), islands=698
-Window 24750000-29750000 (bp keep 24775001-29725001), islands=762
-Window 29700000-31654091 (bp keep 29725001-31654092), islands=190
+Window 0-5000000 (bp keep 1-4975001), islands=735
+Window 4950000-9950000 (bp keep 4975001-9925001), islands=536
+Window 9900000-14900000 (bp keep 9925001-14875001), islands=187
+Window 14850000-19850000 (bp keep 14875001-19825001), islands=236
+Window 19800000-24800000 (bp keep 19825001-24775001), islands=436
+Window 24750000-29750000 (bp keep 24775001-29725001), islands=515
+Window 29700000-31654091 (bp keep 29725001-31654092), islands=176
 === Island-based evaluation ===
-True Positive = 1892
-False Positive = 2796
-False Negative = 702
-Precision = 0.403584
-Recall = 0.729375
+True Positive = 1927
+False Positive = 894
+False Negative = 667
+Precision = 0.683091
+Recall = 0.742868
 === Base-pair evaluation ===
-True Positive = 1419353
-False Positive = 4081933
-False Negative = 290791
-Precision = 0.258004
-Recall = 0.829961
+True Positive = 1391175
+False Positive = 1267695
+False Negative = 318969
+Precision = 0.52322
+Recall = 0.813484
 
 --- Dekodiranje i evaluacija na kromosomu 20 ---
 Učitana sekvenca za kromosom 20 (baze=40785511, dinukleotidi=40785510)
-Window 0-5000000 (bp keep 1-4975001), islands=210
-Window 4950000-9950000 (bp keep 4975001-9925001), islands=21
-Window 9900000-14900000 (bp keep 9925001-14875001), islands=79
-Window 14850000-19850000 (bp keep 14875001-19825001), islands=288
-Window 19800000-24800000 (bp keep 19825001-24775001), islands=219
-Window 24750000-29750000 (bp keep 24775001-29725001), islands=176
-Window 29700000-34700000 (bp keep 29725001-34675001), islands=133
-Window 34650000-39650000 (bp keep 34675001-39625001), islands=542
-Window 39600000-40785510 (bp keep 39625001-40785511), islands=363
+Window 0-5000000 (bp keep 1-4975001), islands=131
+Window 4950000-9950000 (bp keep 4975001-9925001), islands=31
+Window 9900000-14900000 (bp keep 9925001-14875001), islands=71
+Window 14850000-19850000 (bp keep 14875001-19825001), islands=192
+Window 19800000-24800000 (bp keep 19825001-24775001), islands=127
+Window 24750000-29750000 (bp keep 24775001-29725001), islands=115
+Window 29700000-34700000 (bp keep 29725001-34675001), islands=85
+Window 34650000-39650000 (bp keep 34675001-39625001), islands=164
+Window 39600000-40785510 (bp keep 39625001-40785511), islands=138
 === Island-based evaluation ===
-True Positive = 671
-False Positive = 1360
-False Negative = 198
-Precision = 0.330379
-Recall = 0.772152
+True Positive = 667
+False Positive = 387
+False Negative = 202
+Precision = 0.632827
+Recall = 0.767549
 === Base-pair evaluation ===
-True Positive = 548175
-False Positive = 1681946
-False Negative = 109228
-Precision = 0.245805
-Recall = 0.833849
+True Positive = 534215
+False Positive = 331537
+False Negative = 123188
+Precision = 0.617053
+Recall = 0.812614
 
 --- Dekodiranje i evaluacija na kromosomu 21 ---
 Učitana sekvenca za kromosom 21 (baze=27006922, dinukleotidi=27006921)
-Window 0-5000000 (bp keep 1-4975001), islands=720
-Window 4950000-9950000 (bp keep 4975001-9925001), islands=45
-Window 9900000-14900000 (bp keep 9925001-14875001), islands=13
-Window 14850000-19850000 (bp keep 14875001-19825001), islands=70
-Window 19800000-24800000 (bp keep 19825001-24775001), islands=314
-Window 24750000-27006921 (bp keep 24775001-27006922), islands=591
+Window 0-5000000 (bp keep 1-4975001), islands=1011
+Window 4950000-9950000 (bp keep 4975001-9925001), islands=34
+Window 9900000-14900000 (bp keep 9925001-14875001), islands=20
+Window 14850000-19850000 (bp keep 14875001-19825001), islands=79
+Window 19800000-24800000 (bp keep 19825001-24775001), islands=151
+Window 24750000-27006921 (bp keep 24775001-27006922), islands=206
 === Island-based evaluation ===
-True Positive = 642
-False Positive = 1111
-False Negative = 222
-Precision = 0.366229
-Recall = 0.743056
+True Positive = 685
+False Positive = 816
+False Negative = 179
+Precision = 0.456362
+Recall = 0.792824
 === Base-pair evaluation ===
-True Positive = 813621
-False Positive = 1436280
-False Negative = 289006
-Precision = 0.361625
-Recall = 0.737893
+True Positive = 842292
+False Positive = 640229
+False Negative = 260335
+Precision = 0.568148
+Recall = 0.763896
 
 --- Dekodiranje i evaluacija na kromosomu 22 ---
 Učitana sekvenca za kromosom 22 (baze=28181743, dinukleotidi=28181742)
-Window 0-5000000 (bp keep 1-4975001), islands=370
-Window 4950000-9950000 (bp keep 4975001-9925001), islands=668
-Window 9900000-14900000 (bp keep 9925001-14875001), islands=359
-Window 14850000-19850000 (bp keep 14875001-19825001), islands=410
-Window 19800000-24800000 (bp keep 19825001-24775001), islands=759
-Window 24750000-28181742 (bp keep 24775001-28181743), islands=711
+Window 0-5000000 (bp keep 1-4975001), islands=588
+Window 4950000-9950000 (bp keep 4975001-9925001), islands=204
+Window 9900000-14900000 (bp keep 9925001-14875001), islands=131
+Window 14850000-19850000 (bp keep 14875001-19825001), islands=126
+Window 19800000-24800000 (bp keep 19825001-24775001), islands=210
+Window 24750000-28181742 (bp keep 24775001-28181743), islands=209
 === Island-based evaluation ===
-True Positive = 799
-False Positive = 2478
-False Negative = 215
-Precision = 0.243821
-Recall = 0.787968
+True Positive = 795
+False Positive = 673
+False Negative = 219
+Precision = 0.541553
+Recall = 0.784024
 === Base-pair evaluation ===
-True Positive = 776519
-False Positive = 3003896
-False Negative = 165425
-Precision = 0.205406
-Recall = 0.824379
+True Positive = 749882
+False Positive = 660534
+False Negative = 192062
+Precision = 0.531674
+Recall = 0.7961
 
 === Pipeline finished successfully ===

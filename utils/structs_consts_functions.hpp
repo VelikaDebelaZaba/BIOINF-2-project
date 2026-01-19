@@ -3,8 +3,17 @@
 
 /**
  * Globalne konstante HMM-a
- * 2 stanja: 0 = Background (B), 1 = CpG (C)
- * 4 simbola: A, C, G, T
+ *
+ * Model ima:
+ *  - 2 stanja:
+ *      0 = Background
+ *      1 = CpG island
+ *
+ *  - 16 emisijskih simbola koji predstavljaju dinukleotide:
+ *      AA, AC, AG, AT,
+ *      CA, CC, CG, CT,
+ *      GA, GC, GG, GT,
+ *      TA, TC, TG, TT
  */
 constexpr int NSTATE = 2;
 constexpr int NSYM   = 16;
@@ -14,9 +23,9 @@ constexpr int NSYM   = 16;
  * Struktura za pohranu HMM parametara
  *
  * A[i][j]  - prijelazna vjerojatnost iz stanja i u stanje j
- * B[i][k]  - emisijska vjerojatnost stanja i za simbol k
+ * B[i][k]  - emisijska vjerojatnost stanja i za za dinukleotid k (0..15)
  * pi[i]    - inicijalna vjerojatnost stanja i
- * chromosome - broj kromosoma na kojem je HMM zadnje treniran
+ * chromosome označava kromosom na kojem je model zadnje treniran
  */
 struct HMM {
     double A[NSTATE][NSTATE];
