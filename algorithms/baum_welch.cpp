@@ -178,7 +178,8 @@ double baum_welch_iteration_multi(const vector<vector<int>>& sequences, HMM& hmm
 
     // --- update A i B s pseudocountom (sprječava nule) ---
     const double A_PSEUDO = 1e-3;
-    const double B_PSEUDO = 1e-3;
+    const double B_PSEUDO = 1e-2;
+    const double B_FLOOR = 1e-6;
 
     for (int i = 0; i < NSTATE; i++) {
         if (!std::isfinite(A_den[i]) || A_den[i] <= 0.0) A_den[i] = 1e-300;
@@ -194,13 +195,21 @@ double baum_welch_iteration_multi(const vector<vector<int>>& sequences, HMM& hmm
             hmm.A[i][j] = (num + A_PSEUDO) / Aden;
         }
         */
-
+        double bsum = 0.0;
         for (int k = 0; k < NSYM; k++) {
             double num = B_num[i][k];
             if (!std::isfinite(num) || num < 0.0) num = 0.0;
             hmm.B[i][k] = (num + B_PSEUDO) / Bden;
+            if (hmm.B[i][k] < B_FLOOR) hmm.B[i][k] = B_FLOOR;
+                bsum += hmm.B[i][k];
+            }
+            if (bsum > 0.0) {
+                for (int k = 0; k < NSYM; k++) {
+                    hmm.B[i][k] /= bsum;
+                }
+            }
         }
-    }
+
 
     return ll;
 }

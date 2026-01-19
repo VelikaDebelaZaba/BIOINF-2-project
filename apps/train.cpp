@@ -86,14 +86,14 @@ static std::vector<int> to_obs_dinuc(const std::string& s, int start1, int end1)
 int main() {
     HMM hmm;
 
-    hmm.pi[0] = 0.9;
-    hmm.pi[1] = 0.1;
-
     if (std::ifstream("../output/trained_hmm_params.txt")) {
         hmm = load_hmm("../output/trained_hmm_params.txt");
     } else {
         hmm = load_hmm("../output/init_hmm_params.txt");
     }
+
+    hmm.pi[0] = 0.9;
+    hmm.pi[1] = 0.1;
 
     const int chr = hmm.chromosome;
 

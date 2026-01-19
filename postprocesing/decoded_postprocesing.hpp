@@ -16,7 +16,7 @@ using namespace std;
 
 // Minimalna dužina CpG otoka kako bi spriječili šum, tj
 // kratke predviđene otoke ignoriramo
-constexpr int MIN_CPG_LEN = 200;
+constexpr int MIN_CPG_LEN = 500;
 constexpr int MERGE_DISTANCE = 50;
 
 

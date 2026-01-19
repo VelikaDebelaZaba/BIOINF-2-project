@@ -27,8 +27,8 @@ static void keep_and_clip(std::vector<CpgRegion>& islands, int keep_start_bp, in
 int main() {
     HMM hmm = load_hmm("../output/trained_hmm_params.txt");
 
-    hmm.pi[0] = 0.9;
-    hmm.pi[1] = 0.1;
+    hmm.pi[0] = 0.96;
+    hmm.pi[1] = 0.04;
 
     // test kromosomi 17-22
     if (hmm.chromosome < 17) hmm.chromosome = 17;
