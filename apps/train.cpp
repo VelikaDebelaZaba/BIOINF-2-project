@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <algorithm>
-#include <random>
+
 
 #include "../hmm/hmm_io.hpp"
 #include "../hmm/hmm.hpp"
@@ -41,25 +41,6 @@ static int lowercase_before(const std::vector<lowerCaseRegions>& lc, int x) {
 static int map_orig_to_comp(const std::vector<lowerCaseRegions>& lc, int orig_pos) {
     int removed = lowercase_before(lc, orig_pos);
     return orig_pos - removed;
-}
-
-// Provjera preklapanja intervala [a,b] s CpG listom (komprimirani indeksi, 1-based)
-static bool overlaps_any(int a, int b, const std::vector<CpgRegion>& cpg) {
-    // cpg mora biti sortiran po start
-    auto it = std::lower_bound(
-        cpg.begin(), cpg.end(), a,
-        [](const CpgRegion& r, int val){ return r.end < val; }
-    );
-
-    if (it != cpg.end()) {
-        const auto& r = *it;
-        if (!(b < r.start || a > r.end)) return true;
-    }
-    if (it != cpg.begin()) {
-        const auto& r = *(it - 1);
-        if (!(b < r.start || a > r.end)) return true;
-    }
-    return false;
 }
 
 // Dinukleotidna opažanja za prozor [start1, end1] (1-based indeksi u s)
@@ -122,75 +103,57 @@ int main() {
     }
     std::sort(coords_chr.begin(), coords_chr.end(), [](auto& a, auto& b){ return a.start < b.start; });
 
-    // ------- SAMPLING PARAMETRI -------
-    const int FLANK = 200;
-    const int MIN_POS_WIN = 200;
-    const long long MAX_POS_BASES = 5'000'000;
-    const int NEG_RATIO = 5;
-
-    // ------- pozitivni prozori -------
-    std::vector<std::pair<int,int>> pos_windows;
-    long long pos_bases = 0;
+    // ------- SEMI-SUPERVIZIJA: maska dozvoljenih stanja -------
+    // CpG regije su "clamped" na stanje 1, a udaljene regije na stanje 0.
+    const int NEG_MARGIN = 200;
+    std::vector<char> base_is_cpg(s.size() + 1, 0); // 1-based
+    std::vector<char> base_near_cpg(s.size() + 1, 0);
 
     for (const auto& r : coords_chr) {
-        int a = std::max(1, r.start - FLANK);
-        int b = std::min((int)s.size(), r.end + FLANK);
-        if (b - a + 1 < MIN_POS_WIN) continue;
-
-        pos_windows.push_back({a, b});
-        pos_bases += (b - a + 1);
-
-        if (pos_bases >= MAX_POS_BASES) break;
+        int a = std::max(1, r.start);
+        int b = std::min((int)s.size(), r.end);
+        for (int pos = a; pos <= b; pos++) base_is_cpg[pos] = 1;
+        int na = std::max(1, r.start - NEG_MARGIN);
+        int nb = std::min((int)s.size(), r.end + NEG_MARGIN);
+        for (int pos = na; pos <= nb; pos++) base_near_cpg[pos] = 1;
     }
 
-    if (pos_windows.empty()) {
-        std::cerr << "Nema pozitivnih prozora za chr " << chr << " (mapping coords nije uspio?)" << std::endl;
-        return 1;
-    }
-
-    // ------- negativni prozori -------
-    long long target_neg_bases = (long long)NEG_RATIO * pos_bases;
-
-    std::mt19937 rng(12345 + chr);
-    std::uniform_int_distribution<int> len_dist(200, 2000);
-    std::uniform_int_distribution<int> start_dist(1, (int)s.size());
-
-    std::vector<std::pair<int,int>> neg_windows;
-    long long neg_bases = 0;
-
-    int tries = 0;
-    while (neg_bases < target_neg_bases && tries < 2'000'000) {
-        tries++;
-        int L = len_dist(rng);
-        int a = start_dist(rng);
-        int b = a + L - 1;
-        if (b > (int)s.size()) continue;
-
-        if (overlaps_any(a, b, coords_chr)) continue;
-
-        neg_windows.push_back({a, b});
-        neg_bases += L;
-    }
-
-    std::cout << "Sampling chr" << chr
-              << " pos_bases=" << pos_bases
-              << " neg_bases=" << neg_bases
-              << " ratio~1:" << (neg_bases / (double)pos_bases) << "\n";
-
-    // ------- složi training sekvence (dinukleotidi) -------
+    const int T_full = (int)s.size() - 1; // broj dinukleotida
+    const int CHUNK_D = 1'000'000; // dinukleotidi po chunku
+   
     std::vector<std::vector<int>> sequences;
-    sequences.reserve(pos_windows.size() + neg_windows.size());
+    std::vector<std::vector<std::array<double, NSTATE>>> masks;
 
-    for (auto [a,b] : pos_windows) {
-        auto O = to_obs_dinuc(s, a, b);
-        if ((int)O.size() >= 2) sequences.push_back(std::move(O));
-    }
-    for (auto [a,b] : neg_windows) {
-        auto O = to_obs_dinuc(s, a, b);
-        if ((int)O.size() >= 2) sequences.push_back(std::move(O));
-    }
+    for (int start_d = 0; start_d < T_full; start_d += CHUNK_D) {
+        int end_d = std::min(start_d + CHUNK_D, T_full);
+        int start_bp = start_d + 1;
+        int end_bp = end_d + 1;
 
-    std::shuffle(sequences.begin(), sequences.end(), rng);
+        auto O = to_obs_dinuc(s, start_bp, end_bp);
+        if ((int)O.size() < 2) continue;
+
+        std::vector<std::array<double, NSTATE>> mask;
+        mask.reserve(O.size());
+
+        for (int d = start_d; d < end_d; d++) {
+            int b1 = d + 1;
+            int b2 = d + 2;
+            if (b2 > (int)s.size()) break;
+
+            if (base_is_cpg[b1] || base_is_cpg[b2]) {
+                mask.push_back({0.0, 1.0});
+            } else if (!base_near_cpg[b1] && !base_near_cpg[b2]) {
+                mask.push_back({1.0, 0.0});
+            } else {
+                mask.push_back({1.0, 1.0});
+            }
+        }
+
+        if (mask.size() == O.size()) {
+            sequences.push_back(std::move(O));
+            masks.push_back(std::move(mask));
+        }
+    }
 
     if (sequences.empty()) {
         std::cerr << "Nema validnih training sekvenci (dinukleotidi) za chr " << chr << std::endl;
@@ -201,7 +164,7 @@ int main() {
     double prev_ll = -1e100;
     for (int iter = 0; iter < 10; iter++) {
         double ll = 0.0;
-        baum_welch_iteration_multi(sequences, hmm, ll);
+        baum_welch_iteration_multi_masked(sequences, masks, hmm, ll);
 
         std::cout << "Iter " << iter << " logL = " << ll << std::endl;
 

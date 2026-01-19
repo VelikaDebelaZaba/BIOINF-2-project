@@ -17,3 +17,10 @@ using namespace std;
 double baum_welch_iteration(const vector<int>& O, HMM& hmm, double& ll);
 
 double baum_welch_iteration_multi(const vector<vector<int>>& sequences, HMM& hmm, double& ll);
+
+double baum_welch_iteration_multi_masked(
+    const vector<vector<int>>& sequences,
+    const vector<vector<array<double, NSTATE>>>& state_masks,
+    HMM& hmm,
+    double& ll
+);
