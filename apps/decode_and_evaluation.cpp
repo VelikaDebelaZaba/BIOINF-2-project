@@ -107,8 +107,8 @@ static void trim_islands_with_posterior(
 int main() {
     HMM hmm = load_hmm("../output/trained_hmm_params.txt");
 
-    hmm.pi[0] = 0.96;
-    hmm.pi[1] = 0.04;
+    hmm.pi[0] = 0.9;
+    hmm.pi[1] = 0.1;
 
     // Testni kromosomi 17-22
     if (hmm.chromosome < 17) hmm.chromosome = 17;
